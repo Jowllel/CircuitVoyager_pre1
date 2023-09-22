@@ -1,0 +1,64 @@
+\documentclass[a4paper,12pt,numbers=noenddot]{scrreprt}
+\usepackage[left= 3cm,right = 3cm, bottom = 3cm, top = 3cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+
+% ============= Settings for the document =============
+\input{settings}
+
+
+\input{premable}
+
+% ============= Begin of the main document =============
+\begin{document}
+% Title Page will change automatic
+
+\include{title}
+
+\pagenumbering{Roman} % roman page numbering
+
+\include{Chapters/00_Abstract}
+
+% Table of content
+\setcounter{tocdepth}{1} % Levels in the table of content
+\tableofcontents
+\cleardoubleemptypage
+\pagenumbering{arabic} % arabic page numbering
+
+\setlist[enumerate,1]{label*=\arabic*.,font=\bfseries\sffamily}
+
+\pagestyle{icmt-fancy}
+% ================================
+% =            CONTENT           =
+% ================================
+\include{Chapters/01_Introduction}
+\include{Chapters/02_Main_Body}
+\include{Chapters/03_Conclusion}
+\include{Chapters/04_Appendix}
+\include{Chapters/05_Credits}
+
+
+\newpage
+
+\pagestyle{icmt-fancy} 
+% List of bibliography (displays cite elements)
+\bibliography{Bibliography}
+\addcontentsline{toc}{chapter}{\bibname}
+\cleardoubleemptypage
+%% List of figures
+\listoffigures
+\addcontentsline{toc}{chapter}{\listfigurename}
+\cleardoubleemptypage
+% List of tables
+\listoftables
+\addcontentsline{toc}{chapter}{\listtablename}
+\cleardoubleemptypage
+% List of code elements
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Listings}
+\cleardoubleemptypage
+\chapter*{Acronyms}
+\input{acronym}
+\addcontentsline{toc}{chapter}{Acronyms}
+
+\end{document}
+% ============= End of the main document =============
