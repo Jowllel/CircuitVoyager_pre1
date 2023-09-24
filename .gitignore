@@ -1,1 +1,13 @@
 /4_Resources/1_STM32-H747I-DISCO/99_Demo_SW
+*.aux
+*.bbl
+*.blg
+*fdb_latexmk
+*fls
+*lof
+*lol
+*lot
+*out
+*gz
+*toc
+/2_Documentation/1_Main/Documentation_CircuitVoyager_Pre1/main.log
