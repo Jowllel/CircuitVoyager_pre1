@@ -7,3 +7,51 @@ The goal of this project is to develop a tiny extension Board for the STM32H747i
 I want to learn how to implement high speed protocols such as \acs{mipidsi} or \acs{qspi}. Later in the last year of my apprenticeship I'd like to develop a whole \acs{dmm} on my own, but with a different approach as standard ones like these from Fluke. For example, I want to make the \acs{dmm} rechargeable and modernize it a bit. 
 \\
 To realize this project I'm going to use the following tools: Altium Designer, STM32-CubeIDE, LaTeX, TouchGFX.
+\\
+Also I won't make a diary, because it's easier for me to write my findings down sorted by theme rather than date. But to keep the chronological order of the stuff I've done, there's a Journal in Chapter: [\ref{sec:Journal}].
+
+\newpage
+
+\section{Mindmap}
+\label{sec:Mindmap}
+
+\vspace{1cm}
+
+\begin{figure}[H]
+	\centering
+    \begin{tikzpicture}[mindmap, grow cyclic, every node/.style=concept, concept color=orange!40, 
+        level 1/.append style={level distance=5cm,sibling angle=90},
+        level 2/.append style={level distance=3cm,sibling angle=45},]
+
+        \node{CircuitVoyager pre1}
+            child [concept color=blue!30] { 
+                node {Software}
+                child { node {extern. Memory}}
+                child { node {HAL}}
+                child { node {UI Modes}}
+                child { node {Cali-bration}}
+            }
+            child [concept color=green!30] { 
+                node {Hardware}
+                child { node {Adressable LEDs}}
+                child { node {Range Switching}}
+                child { node {STM32-H747i}}
+                child { node {Touch Display}}
+                child { node {extern. Memory}}
+            }
+            child [concept color=red!30] { 
+                node {New Skills}
+                child { node {\LaTeX}}
+	            child { node {Hispeed Protocols}}
+	            child { node {Altium Designer}}
+	            child { node {Touch-GFX}}
+            };
+    \end{tikzpicture}  
+
+    \vspace{1cm}
+
+	\caption{Project Mindmap}
+	\label{fig:Project Mindmap}
+\end{figure}
+
+\newpage
