@@ -1,0 +1,10 @@
+[ProjectGroup]
+Version=1.0
+[Project1]
+ProjectPath=PCB_EXTENSION_CircuitVoyager_pre1\PCB_EXT_CV_PRE1.PrjPcb
+[Project2]
+ProjectPath=..\4_Resources\1_STM32-H747I-DISCO\2_PCBs\1_Mainboard\Altium_Designer\MB1248.PrjPCB
+[Project3]
+ProjectPath=..\4_Resources\1_STM32-H747I-DISCO\2_PCBs\2_DisplayCarrier\Altium_Designer\MB1166.PrjPCB
+[Project4]
+ProjectPath=..\4_Resources\1_STM32-H747I-DISCO\2_PCBs\3_STMod\Altium_Designer\MB1280.PrjPCB
