@@ -14,7 +14,6 @@ The most time of the project I will work at home because it's a rather big proje
 \subsubsection{Tools}
 To realize this project I will mainly use, the \acs{sw} STM32CubeIDE with \acs{hal} and Altium Designer. The documentation is written in LaTeX in VSCode. And I'm planning to order the \acs{pcb} on JLCPCB and I will populate and reflow the PCB at ETHZ, where I'm also allowed to use the measurement equipment for the HW tests.
 
-
 \subsubsection{Technical Details}
 \begin{table}[H]
     \centering
@@ -23,7 +22,11 @@ To realize this project I will mainly use, the \acs{sw} STM32CubeIDE with \acs{h
  \hline
  value &  min. & typ. & max. & unit & description \\ [0.5ex] 
  \hline\hline
-  supply voltage & & 5 & & V & \\ 
+  supply voltage & & 5 & & V & over USB \\ 
+ \hline
+ curent to measure & 0 & & 1 & A & \\ 
+ \hline
+ voltage to measure & 0 & & 10 & V & \\ 
  \hline
 \end{tabular}
     \caption{Technical Details}
@@ -50,6 +53,8 @@ Interface from DevBoard to Extension PCB.
     \item GPIOs
 \end{itemize}
 
+I will use the STMOD\#14 connection that was intended to use as PWM, as a second ADC input. To measure current and voltage at the same time to later show the power cosumption of the DUT.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=13cm]{Resources/Pictures/STMOD_Interface.png}
@@ -60,11 +65,11 @@ Interface from DevBoard to Extension PCB.
 
 
 
+\newpage
 
+\subsection{Hardware concept}
 
-\subsection{Block Diagram}
-
-
+After some thoughts I came up with the following HW concept.
 
 
 \begin{figure}[H]
@@ -79,28 +84,19 @@ Interface from DevBoard to Extension PCB.
     \tikzstyle{output} = [coordinate]
     \tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
 
-\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    \includegraphics[width=15cm]{Resources/Pictures/Hardware_Concept_CircuitVoyager_pre1.pdf}
 
-    \node [input, name=input] {};
-    \node [sum, right of=input] (sum) {};
-    \node [block, right of=sum] (controller) {Controller};
-    \node [block, right of=controller, pin={[pinstyle]above:D},
-            node distance=3cm] (system) {System};
+    \vspace{0.2cm}
 
-    \draw [->] (controller) -- node[name=u] {$u$} (system);
-    \node [output, right of=system] (output) {};
-    \node [block, below of=u] (measurements) {Measurements};
-
-    \draw [draw,->] (input) -- node {$r$} (sum);
-    \draw [->] (sum) -- node {$e$} (controller);
-    \draw [->] (system) -- node [name=y] {$y$}(output);
-    \draw [->] (y) |- (measurements);
-    \draw [->] (measurements) -| node[pos=0.99] {$-$} 
-        node [near end] {$y_m$} (sum);
-\end{tikzpicture}
-
-    \vspace{1cm}
-
-	\caption{Extension PCB Block Diagram}
-	\label{fig:Extension PCB Block Diagram}
+	\caption{Extension PCB HW concept}
+	\label{fig:Extension PCB HW concept}
 \end{figure}
+
+\subsubsection{Voltage measurement}
+To measure voltage, the DUT should be connected to the terminals V and COM. COM is connected internally to device GND. The V terminal is connected to the Voltage divider block. This block divides the input voltage down, so the ADC in the MCU doesn't overshoot. There are 2 ranges to measure voltage, which can be chosen by setting 2 digital output, that go from the MCU to the voltage divider. There's also an OVP, to protect the MCU from voltages higher than 3.3V. \cite{DMM_Video_ElectroNoobs}
+
+\subsubsection{Current measurement}
+To measure current, the DUT should be connected to the terminals A and COM. COM is connected internally to device GND. The A terminal is connected to current measurement block. This block measures the current, by letting the current flow through one of two shunt resistors. The DMM can choose which resistor and therefore range should be selected with the 2 digital Output that are connected from the MCU to the current measurement block. The voltage over the selected shunt is then amplified, by a current amplifier IC and then measured by the MCUs ADC. There's also an OVP, to protect the MCU from voltages higher than 3.3V. \cite{DMM_Video_ElectroNoobs}
+
+\subsubsection{Continuity measurement}
+To measure continuity, both the voltage divider and the current source is used. The continuity between the V and COM pins is measured. For this a constant current produced by the current source is flowing out of the V terminal. Simultaneously the voltage across those terminals is measured and the resistance / continuity can be evaluated. If continuity is detected, either the buzzer beeps or the LEDs blink. \cite{DMM_Video_ElectroNoobs}
