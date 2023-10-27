@@ -105,3 +105,35 @@ To measure continuity, both the voltage divider and the current source is used. 
 
 \subsection{Schematic}
 The schematic took me a bit longer than usual, because it's my first whole HW project in Altium before I used KiCAD and Altium is a lot more features and in my opinion is harder to learn. The schematic is in the Appendix [CHAPTER!!!! :)].
+
+\subsubsection{Buzzer Circuit}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=8cm, trim={3.4cm 19cm 28.5cm 2cm}, clip]{Resources/Pictures/Schematic_PCB_EXTENSION_CircuitVoyager_pre1.pdf}
+	\caption{Buzzer Circuit}
+	\label{fig:Buzzer Circuit}
+\end{figure}
+
+This is an active buzzer. If the BUZ line is pulled high by the MCU, the MOSFET starts to conduct and the buzzer starts beeping. This circuit will be used to give an acoustic feedback to the user, if for example a continuity has been detected. 
+
+The resistors R3 and R5 build a voltage divider with a ratio of 1/10. This has the advantage, that the gate capacitance of Q1 is charged with a limited current and if nothing's connected to the BUZ net the MOSFET turns the buzzer off and the whole machine isn't  in an indeterminate state.
+
+The resistor R2 limit the current flowing through LS1. As LS1 is rated for 30mA at 3V.
+
+\[R_2=\frac{U_{VCC}-U_{LS1}}{I_{LS1}}=\frac{5V-3V}{30mA}=66.\overline{6}\Omega\]
+\[P_{R2}=I^2 \cdot R=(30mA)^2 \cdot 66. \overline{6} \Omega =60mW\]
+
+Finally, I've chosen a 220\(\Omega\) resistor for R2. With this value the sound should be enough loud, that the user hears it. And the power loss of the resistor will be smaller. That means it should be perfectly fine to use a 0402 resistor that is rated for 62.5mW.
+
+
+\subsubsection{Adressable LEDs Circuit}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm, trim={1.3cm 4cm 16.3cm 20cm}, clip]{Resources/Pictures/Schematic_PCB_EXTENSION_CircuitVoyager_pre1.pdf}
+	\caption{Adressable LEDs Circuit}
+	\label{fig:Adressable LEDs Circuit}
+\end{figure}
+
+An other option to show if continuity has been detected are these LEDs. The advantage of them is, that they only need one data connection and already include their logic and driving circuits. I've equiped the with one bulk C each, because they're integrated components and they're driven over the 5V rail, which they're specified for. But if they're driven by 5V they theoretically detect all voltages over 3.5V as a logical high. But the MCU only output 3.3V. I've used those LEDs much in past projects and this was never a problem, so I'm assuming that it should also work this time.
