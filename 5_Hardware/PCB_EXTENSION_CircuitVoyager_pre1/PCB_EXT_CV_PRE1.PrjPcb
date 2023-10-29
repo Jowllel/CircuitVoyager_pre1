@@ -99,6 +99,10 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Design Rule Check - Main.html
+DItemRevisionGUID=
+
 [Parameter1]
 Name=Revision
 Value=0.0
