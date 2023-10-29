@@ -190,3 +190,18 @@ This range switching part has the advantage of using many ranges at once, as for
 The current source circuit will be used to measure continuity and resistance together with the voltage measuring function. A constant current will be induced to the DUT and because the voltage over the DUT can be measured, the resistance can be calculated. The constant current can be calculated as following:
 \[I_{OUT} = \frac{U_{VS}}{R_1} + 15\mu A = \frac{0.617V}{620\Omega} + 15\mu A = 1.01mA\]
 But this doesn't matter that much, because the DMM will be calibrated using the solderbridge J1.
+
+
+\subsubsection{Current Measuring Circuit}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm, trim={19.5cm 5cm 1cm 14.5cm}, clip]{../../../5_Hardware/PCB_EXTENSION_CircuitVoyager_pre1/Project Outputs for PCB_EXT_CV_PRE1/Schematic_PCB_EXTENSION_CircuitVoyager_pre1.pdf}
+	\caption{Current Measuring Circuit}
+	\label{fig:Current Measuring Circuit}
+\end{figure}
+
+The current measuring circuit is used to measure currents with the A terminal. This circuit is one approach to range switching, which is described more detailed in the following chapter [Write more detailed text about how to execute range switching and what are the pros and cons. Minimum 3 options]. This circuit features 2 ranges and I came up with this idea, while reading some articles on DMMs \cite{Digital_multimeter_circuit_using_ICL7107} \cite{AN-202_A_Digital_Multimeter_Using_the_ADD3501}. The ranges are calculated as following:
+\[I_{OL(R1)} = \frac{U_{OL(MCU)}}{R_{14} \cdot G_{U4}} = \frac{3.3V}{50m\Omega \cdot 200\frac{V}{V}} = 330mA\]
+\[I_{OL(R2)} = \frac{U_{OL(MCU)}}{R_{14} \cdot G_{U5}} = \frac{3.3V}{50m\Omega \cdot 50\frac{V}{V}} = 1.32A\]
+These voltages are then fed into an analog MUX, which switches the processed voltages to the ADC. This has the advantage, that the DMM doesn't manipulate the actual path, where the current is flowing through and therefore not influencing the DUT.
