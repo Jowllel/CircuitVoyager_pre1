@@ -103,6 +103,46 @@ DocumentUniqueId=
 DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Design Rule Check - Main.html
 DItemRevisionGUID=
 
+[GeneratedDocument2]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument3]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GBP
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GM
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTP
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.REP
+DItemRevisionGUID=
+
 [Parameter1]
 Name=Revision
 Value=0.0
