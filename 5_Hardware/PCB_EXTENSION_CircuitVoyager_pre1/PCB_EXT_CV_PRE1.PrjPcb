@@ -100,52 +100,60 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [GeneratedDocument1]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Design Rule Check - Main.html
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.EXTREP
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main.REP
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GBL
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Copper_Signal_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GBP
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Copper_Signal_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GBS
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Legend_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument6]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GM
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Legend_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument7]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTL
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_NPTH_Drill.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument8]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTO
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Paste_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument9]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTP
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Paste_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument10]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.GTS
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Profile.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument11]
-DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\Gerber\Main.REP
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_PTH_Drill.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Project Outputs for PCB_EXT_CV_PRE1\GerberX2\Main_Soldermask_Top.gbr
 DItemRevisionGUID=
 
 [Parameter1]
 Name=Revision
-Value=0.0
+Value=1.0
 
 [Configuration1]
 Name=Sources
