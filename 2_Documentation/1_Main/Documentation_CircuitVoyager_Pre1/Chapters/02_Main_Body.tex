@@ -120,9 +120,9 @@ This is an active buzzer. If the BUZ line is pulled high by the MCU, the MOSFET 
 The resistors R3 and R5 build a voltage divider with a ratio of 1/10. This has the advantage, that the gate capacitance of Q1 is charged with a limited current and if nothing's connected to the BUZ net the MOSFET turns the buzzer off and the whole machine isn't  in an indeterminate state.
 
 The resistor R2 limit the current flowing through LS1. As LS1 is rated for 30mA at 3V.
-\[R_2=\frac{U_{VCC}-U_{LS1}}{I_{LS1}}=\frac{5V-3V}{30mA}=66.\overline{6}\Omega\]
+\[R_2=\frac{U_{VCC}-U_{LS1}}{I_{LS1}}=\frac{5V-3V}{30mA}= \underline{\underline{66.\overline{6}\Omega}}\]
 
-\[P_{R2}=I^2 \cdot R=(30mA)^2 \cdot 66. \overline{6} \Omega =60mW\]
+\[P_{R2}=I^2 \cdot R=(30mA)^2 \cdot 66. \overline{6} \Omega = \underline{\underline{60mW}}\]
 Finally, I've chosen a 220\(\Omega\) resistor for R2. With this value the sound should be enough loud, that the user hears it. And the power loss of the resistor will be smaller. That means it should be perfectly fine to use a 0402 resistor that is rated for 62.5mW.
 
 
@@ -151,8 +151,8 @@ An other option to show if continuity has been detected are these LEDs. The adva
 My Problem is, that the voltages coming from  the Extension PCB, can't exceed 4V according to the MCUs datasheet. But because this PCB is powered by the 5V rail, theoretically these voltages could damage the MCU. So the goal was to develop a circuit which protects the ADC inputs. The first idea that came to my mind was to use varistors. I've already used the once in a project, but after reading some application notes on this topic, I decided to use a zenerdiode for the OVP. \cite{Protecting_ADC_Inputs_AN}
 
 The zenerdiode I've used has a nominal zenervoltage of 3.6V (max. 3.78V) at 20mA. Together with R13 this should result with a maximum voltage of 3.78V at the ADC inputs. As long as the PREOV voltage doesn't exceed 5.6V.
-\[U_{PREOV(MAX.)} = R_{13} \cdot I_Z + U_Z = 100\Omega \cdot 20mA + 3.6V = 5.6V\]
-\[P_{R13} = R \cdot I^2 = 100\Omega \cdot (20mA)^2 = 40mW\]
+\[U_{PREOV(MAX.)} = R_{13} \cdot I_Z + U_Z = 100\Omega \cdot 20mA + 3.6V = \underline{\underline{5.6V}}\]
+\[P_{R13} = R \cdot I^2 = 100\Omega \cdot (20mA)^2 = \underline{\underline{40mW}}\]
 
 
 \subsubsection{Voltage Divider Circuit}
@@ -165,8 +165,8 @@ The zenerdiode I've used has a nominal zenervoltage of 3.6V (max. 3.78V) at 20mA
 \end{figure}
 
 The voltage divider is used to measure voltages over the V terminal. This circuit is one approach to range switching, which is described more detailed in the following chapter [Write more detailed text about how to execute range switching and what are the pros and cons. Minimum 3 options]. This voltage divider features 2 ranges and I came up with this idea by myself. The ranges are calculated as following:
-\[U_{OL(R1)} = \frac{(R_4 + R_7) \cdot U_{OL(MCU)}}{R_7} = \frac{(4.7M\Omega + 10M\Omega) \cdot 3.3V}{10M\Omega} = 4.851V\]
-\[U_{OL(R2)} = \frac{(R_4 + R_8) \cdot U_{OL(MCU)}}{R_8} = \frac{(4.7M\Omega + 2.2M\Omega) \cdot 3.3V}{2.2M\Omega} = 10.35V\]
+\[U_{OL(R1)} = \frac{(R_4 + R_7) \cdot U_{OL(MCU)}}{R_7} = \frac{(4.7M\Omega + 10M\Omega) \cdot 3.3V}{10M\Omega} = \underline{\underline{4.851V}}\]
+\[U_{OL(R2)} = \frac{(R_4 + R_8) \cdot U_{OL(MCU)}}{R_8} = \frac{(4.7M\Omega + 2.2M\Omega) \cdot 3.3V}{2.2M\Omega} = \underline{\underline{10.35V}}\]
 This divided voltage is then fed into an impedance converter which guarantees that the voltage divider isn't manipulated by the ADC internal resistance and also helps on the DevBoards analog paths, because they're very long and therefore vulnerable to electromagnetic fields.
 
 \textbf{
@@ -188,7 +188,7 @@ This range switching part has the advantage of using many ranges at once, as for
 \end{figure}
 
 The current source circuit will be used to measure continuity and resistance together with the voltage measuring function. A constant current will be induced to the DUT and because the voltage over the DUT can be measured, the resistance can be calculated. The constant current can be calculated as following:
-\[I_{OUT} = \frac{U_{VS}}{R_1} + 15\mu A = \frac{0.617V}{620\Omega} + 15\mu A = 1.01mA\]
+\[I_{OUT} = \frac{U_{VS}}{R_1} + 15\mu A = \frac{0.617V}{620\Omega} + 15\mu A = \underline{\underline{1.01mA}}\]
 But this doesn't matter that much, because the DMM will be calibrated using the solderbridge J1.
 
 
@@ -202,6 +202,55 @@ But this doesn't matter that much, because the DMM will be calibrated using the 
 \end{figure}
 
 The current measuring circuit is used to measure currents with the A terminal. This circuit is one approach to range switching, which is described more detailed in the following chapter [Write more detailed text about how to execute range switching and what are the pros and cons. Minimum 3 options]. This circuit features 2 ranges and I came up with this idea, while reading some articles on DMMs \cite{Digital_multimeter_circuit_using_ICL7107} \cite{AN-202_A_Digital_Multimeter_Using_the_ADD3501}. The ranges are calculated as following:
-\[I_{OL(R1)} = \frac{U_{OL(MCU)}}{R_{14} \cdot G_{U4}} = \frac{3.3V}{50m\Omega \cdot 200\frac{V}{V}} = 330mA\]
-\[I_{OL(R2)} = \frac{U_{OL(MCU)}}{R_{14} \cdot G_{U5}} = \frac{3.3V}{50m\Omega \cdot 50\frac{V}{V}} = 1.32A\]
+\[I_{OL(R1)} = \frac{U_{OL(MCU)}}{R_{14} \cdot G_{U4}} = \frac{3.3V}{50m\Omega \cdot 200\frac{V}{V}} = \underline{\underline{330mA}}\]
+\[I_{OL(R2)} = \frac{U_{OL(MCU)}}{R_{14} \cdot G_{U5}} = \frac{3.3V}{50m\Omega \cdot 50\frac{V}{V}} = \underline{\underline{1.32A}}\]
 These voltages are then fed into an analog MUX, which switches the processed voltages to the ADC. This has the advantage, that the DMM doesn't manipulate the actual path, where the current is flowing through and therefore not influencing the DUT.
+
+The power rating of R14 is 125mW, while the maximal power loss of R14 at 1.32A is 87.12mW.
+\[P_{R14} = I^2 \cdot R = (1.32A)^2 \cdot 50m \Omega = \underline{\underline{87.12mW}}\]
+
+
+
+\newpage
+\subsection{PCB}
+\subsubsection{Layout}
+
+The PCB layout was also made in Altium Designer. This was therefore also my first layout in Altium Designer. The only problem I had, were the vias and imporvised them by setting their parameters manually. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6cm, page=2]{Resources/PCB_LAyout.png}
+	\caption{Extension PCB Layout}
+	\label{fig:Extension PCB Layout}
+\end{figure}
+
+Later I've generated the output files (Gerber files, BOM, assembly drawing) and ordered the PCB on JLCPCB with 2 layers, tented vias, removed order number and blue solder mask. The BOM is in the appendix chapter: \ref{sec:Extension PCB Manufacture 11.23 BOM}. The components were sourced using DigiKey and ETH SPH.
+
+
+Then I've assembled the PCB by hand, which wasn't a problem at all.
+
+\subsubsection{Assembly}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=10cm, page=2]{../../../5_Hardware/PCB_EXTENSION_CircuitVoyager_pre1/Project Outputs for PCB_EXT_CV_PRE1/PCB_EXTENSION_CircuitVoyager_pre1.pdf}
+	\caption{Extension PCB Assembly Drawing}
+	\label{fig:Extension PCB Assembly Drawing}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm]{Resources/PCB.png}
+	\caption{Extension PCB}
+	\label{fig:Extension PCB}
+\end{figure}
+PCB Bild durch echtes bild ersetzen.
+
+\newpage
+\subsubsection{Commissioning}
+
+
+
+\section{QSPI Flash Implementation}
