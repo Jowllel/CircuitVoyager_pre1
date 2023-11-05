@@ -12,7 +12,7 @@ I've already bought two \acs{devboard}s one of them stays at \acs{tbz} and the o
 The most time of the project I will work at home because it's a rather big project to execute in one semester. I will also have much time in the fall holidays to work on it. The project will approximately take 100h to complete. Also the more detailed timeplan is in chapter: [\ref{sec:GANTT Chart}]
 
 \subsubsection{Tools}
-To realize this project I will mainly use, the \acs{sw} STM32CubeIDE with \acs{hal} and Altium Designer. The documentation is written in LaTeX in VSCode. And I'm planning to order the \acs{pcb} on JLCPCB and I will populate and reflow the PCB at ETHZ, where I'm also allowed to use the measurement equipment for the HW tests.
+To realize this project I will mainly use, the \acs{sw} STM32CubeIDE with \acs{hal}, STM32 CubeProgrammer and Altium Designer. The documentation is written in LaTeX in VSCode. And I'm planning to order the PCB on JLCPCB and I will populate and reflow the PCB at ETHZ, where I'm also allowed to use the measurement equipment for the HW tests.
 
 \subsubsection{Technical Details}
 \begin{table}[H]
@@ -252,5 +252,87 @@ PCB Bild durch echtes bild ersetzen.
 \subsubsection{Commissioning}
 
 
+\newpage
+\section{The MCU}
+For this project I've chosen a high speed microcontroller. I'm using an STM32H747-XIH6U. The special thing about this MCU is, that it has 2 cores. The main core is a Cortex M7 at a frequency of up to 480MHz and the second one is a Cortex M4 running at up to 240MHz. But this also means that it's a bit expensive at about 20 CHF. This MCU also features 1 MB of flash per core and a total of 1 MB of RAM. But these memories can get full rather quickly, when working with graphical displays or the USB stack for example. That's why I'm using an external flash and RAM in this project.
 
-\section{QSPI Flash Implementation}
+
+\section{STM32 Multicore Debugging}
+As usual, I'll be testing the DevBoard by programming a good old blink sketch. The information for this multicore blink sketch I got from Controller Tech's YouTube channel \cite{YT_CT_Mutlicore_Debugging}, because the official SW documentation from STM isn't that good, and therefore I wasn't able to get the information I needed to run my first sketch.
+
+\subsection{Procedure}
+\begin{enumerate}
+	\item Create a project with the STM32 Cube template for the STM32H747XIH6. (Using default configuration)
+	\item Set up the RCC to use the external oscillator and configure clocks to their maximum frequencies.
+	\item Set up the GPIOs of for the debug LEDs. Special is, that you have to assign a core to each GPIO pin. This parameter says, which core is able to manipulate said GPIO and in which under project (CM4 or CM7) has the define with the GPIO name defined. 
+		\begin{table}[H]
+			\centering
+			\label{tab:LED Annotation}
+		\begin{tabular}{|| c | c | c | c | c ||} 
+		\hline
+		STM32 pin & LED number & LED color & Name in code & Core \\ [0.5ex] 
+		\hline\hline
+		PI12 & LED1 & Green & LED\_G & CM7 \\
+		\hline
+		PI13 & LED2 & Orange & LED\_O & CM7 \\
+		\hline
+		PI14 & LED3 & Red & LED\_R & CM4 \\
+		\hline
+		PI15 & LED4 & Blue & LED\_B & CM4 \\
+		\hline
+		\end{tabular}
+			\caption{LED Annotation}
+		\end{table}
+	\item Under: Project Manager \(\rightarrow\) Code Generator: Enable the option: "Generate Peripheral initialization as a pair of .c/.h files per peripheral".
+	\\ This should make the project more structurized.
+	\item Generate code.
+	\item Now 2 under projects are created, for each core one. Rather than using the standard files, that are already full of redundant information, I will create my own main files, with the advantage that they're also easily separable between the CM4 and CM7. The files written by me are stored in the folders "Core/Usercode"
+	\item Write the code to blink the LEDs for each core:
+		\definecolor{codegreen}{rgb}{0,0.6,0}
+		\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+		\definecolor{codepurple}{rgb}{0.58,0,0.82}
+		\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+		
+		\lstdefinestyle{mystyle}{ 
+			commentstyle=\color{codegreen},
+			keywordstyle=\color{magenta},
+			numberstyle=\tiny\color{codegray},
+			stringstyle=\color{codepurple},
+			basicstyle=\ttfamily\footnotesize,
+			breakatwhitespace=false,         
+			breaklines=true,                 
+			captionpos=b,                    
+			keepspaces=true,                 
+			numbers=left,                    
+			numbersep=5pt,                  
+			showspaces=false,                
+			showstringspaces=false,
+			showtabs=false,                  
+			tabsize=2
+		}
+		
+		\lstset{language=C,caption={Blink Code CM4},label=DescriptiveLabel, style=mystyle}
+		\begin{codeblock}
+			\lstinputlisting{../../../6_Software/blink dual core/CM4/Core/Usercode/usermain_CM4.c}
+		\end{codeblock}
+	\item Now configure the debug configuration for the CM7: Enable "Halt all cores" and under Startup add the CM4 config with the "Debug" Build configuration selected.
+	\item Now configure the debug configuration for the CM4: set port to 61237, set reset behaviour type to "None" and under Startup \(\rightarrow\) Edit: uncheck the download option.
+	\item Now to flash the MCU it's important, that all files are saved, because they're not saved automatically as usually in single core projects. Then Click on the "Run" button, with the CM7 configuration selected, the CM4 won't work.
+	\item To debug the MCU also save all files and then start debugging with the CM7 configuration selected. After the CM7 session started, click again on the debug button and start the session for the CM4. Now run both threads simultaneously by selecting them both with the "Ctrl" key and then starting them. After those threads started and the clock is configured, they can be manipulated separately.
+\end{enumerate} 
+
+Additionally, I'd recommend watching the video from Controllers Tech, as it's really informative. \cite{YT_CT_Mutlicore_Debugging} For Example Controllers Tech explains how the startup of the cores work and how you can disable cores.
+
+
+
+\section{Boot Problems}
+While programming the MCU for the first times, I had the problem that the MCU wasn't detected sometimes by the ST-Link. Therefore, the MCU wasn't resetable nor new firmware could be uploaded. It turned out, that the ST-Link could program the MCU again, when accessing the BOOT mode, which is intended to boot the MCU over USB DFU. But this mode also stops the MCU from starting the script and therefore the ST-Link detects the MCU. The boot mode can be accessed by shorting the pads of R192. Then the MCUs memory can be erased and after removing the solderbridge, the MCU operates again as normal. After this problem, with the not detectable MCU occurred multiple times, I decided to add a button to access the boot mode. So I don't have to have a soldering iron around, when the MCU ain't detectable. This modification looks as following:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{Resources/HW_Boot_MOD.JPEG}
+	\caption{Hardware Boot Button Mod}
+	\label{fig:Hardware Boot Button Mod}
+\end{figure}
+
+Later it turned out, that those problems came from a faulty RCC configuration. That's something I should investigate further. Because right now I'm only able to get up to 400MHz for the CM7. This probably has something to do with the SMPS and Voltage scaling option in the RCC tab.
