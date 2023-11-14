@@ -1,10 +1,3 @@
-/*
- * usermain_CM4.c
- *
- *  Created on: Nov 5, 2023
- *      Author: joels
- */
-
 #include "usermain_CM4.h"
 
 void usermain_cm4(void)
