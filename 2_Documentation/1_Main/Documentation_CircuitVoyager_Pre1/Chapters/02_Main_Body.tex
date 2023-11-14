@@ -253,7 +253,7 @@ PCB Bild durch echtes bild ersetzen.
 
 \newpage
 \section{The MCU}
-For this project I've chosen a high speed microcontroller. I'm using an STM32H747-XIH6U. The special thing about this MCU is, that it has 2 cores. The main core is a Cortex M7 at a frequency of up to 480MHz and the second one is a Cortex M4 running at up to 240MHz. But this also means that it's a bit expensive at about 20 CHF. This MCU also features 1 MB of flash per core and a total of 1 MB of RAM. But these memories can get full rather quickly, when working with graphical displays or the USB stack for example. That's why I'm using an external flash and RAM in this project.
+For this project I've chosen a high speed microcontroller. I'm using an STM32H747-XIH6U. The special thing about this MCU is, that it has 2 cores. The main core is a Cortex M7 at a frequency of up to 480MHz and the second one is a Cortex M4 running at up to 240MHz. But this also means that it's a bit expensive at about 20 CHF. This MCU also features 1 MB of flash per core and a total of 1 MB of RAM. But these memories can get full rather quickly, when working with graphical displays or the USB stack for example. That's why I'm using an external flash and RAM in this project.
 
 
 \section{STM32 Multicore Debugging}
@@ -287,29 +287,6 @@ As usual, I'll be testing the DevBoard by programming a good old blink sketch. T
 	\item Generate code.
 	\item Now 2 under projects are created, for each core one. Rather than using the standard files, that are already full of redundant information, I will create my own main files, with the advantage that they're also easily separable between the CM4 and CM7. The files written by me are stored in the folders "Core/Usercode"
 	\item Write the code to blink the LEDs for each core:
-		\definecolor{codegreen}{rgb}{0,0.6,0}
-		\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-		\definecolor{codepurple}{rgb}{0.58,0,0.82}
-		\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-		
-		\lstdefinestyle{mystyle}{ 
-			commentstyle=\color{codegreen},
-			keywordstyle=\color{magenta},
-			numberstyle=\tiny\color{codegray},
-			stringstyle=\color{codepurple},
-			basicstyle=\ttfamily\footnotesize,
-			breakatwhitespace=false,         
-			breaklines=true,                 
-			captionpos=b,                    
-			keepspaces=true,                 
-			numbers=left,                    
-			numbersep=5pt,                  
-			showspaces=false,                
-			showstringspaces=false,
-			showtabs=false,                  
-			tabsize=2
-		}
-		
 		\lstset{language=C,caption={Blink Code CM4},label=DescriptiveLabel, style=mystyle}
 		\begin{codeblock}
 			\lstinputlisting{../../../6_Software/blink dual core/CM4/Core/Usercode/usermain_CM4.c}
@@ -320,7 +297,7 @@ As usual, I'll be testing the DevBoard by programming a good old blink sketch. T
 	\item To debug the MCU also save all files and then start debugging with the CM7 configuration selected. After the CM7 session started, click again on the debug button and start the session for the CM4. Now run both threads simultaneously by selecting them both with the "Ctrl" key and then starting them. After those threads started and the clock is configured, they can be manipulated separately.
 \end{enumerate} 
 
-Additionally, I'd recommend watching the video from Controllers Tech, as it's really informative. \cite{YT_CT_Mutlicore_Debugging} For Example Controllers Tech explains how the startup of the cores work and how you can disable cores.
+Additionally, I'd recommend watching the video from Controllers Tech, as it's really informative. \cite{YT_CT_Mutlicore_Debugging} For Example Controllers Tech explains how the startup of the cores work and how you can disable cores. There are also more videos from Controllers Tech in this "Multi Core STM32" series.
 
 
 
@@ -335,3 +312,36 @@ While programming the MCU for the first times, I had the problem that the MCU wa
 \end{figure}
 
 Later it turned out, that those problems came from a faulty RCC configuration. That's something I should investigate further. Because right now I'm only able to get up to 400MHz for the CM7. This probably has something to do with the SMPS and Voltage scaling option in the RCC tab.
+
+\section{QSPI Flash}
+To extend the internal flash of the MCU, there is 128MB of QSPI Flash on the DevBoard. In this section I'll try to implement this flash, so I'm able to store the actual firmware on this external flash. This also means, that the MCU should then boot from the external memory.
+
+\subsection{Write Test}
+In this first test I'll try to simply write some data to the Flash and therefore confirm, that the communication between the MCU and flash works as intended. For this I've again followed the instructions from Controllers Tech on YouTube. 
+\cite{YT_CT_QSPI}
+
+\begin{enumerate}
+	\item Enable QSPI block in "Dual Bank with Quad Lines" mode (Because DevBoard uses two ICs, each 512Mbit) for CM7.
+	\item Set up pins according to the schematics. (standard cube config is wrong.) Configure Pins to CM7 in "very high" speed mode.
+	\item Enable chip select 1 for both banks.
+	\item Set clock prescaler to 2. (200MHz Clock divided by 2 to the power of 2 \(\rightarrow\) 50MHz ) (Flashs max. frequency in DTR mode (dual bank) is 90MHz)
+	\item Fifo threshold to 4.
+	\item Sample shifting to "Sample Shifting Half Cycle"
+	\item Flash size to 26. (Flash size is 2 to the power of 26 + 1 Bytes. \(\rightarrow\) 128MB )
+	\item Chip select high time to "6 Cycles"
+	\item For Cortex-M7 Enable: ICache and DCache.
+	\item Generate code.
+	\item Then add user code lines from STM GitHub. \cite{GIT_DRIVER_QSPI_FLASH} to qspi.c and qspi.h.
+\end{enumerate}
+
+Now you can download the firmware to the MCU. And verify, that no error is triggered. (Orange LED blinking) Then to verify, that the string was written to the flash: open STM32CubeProgrammer and enable the external loader for the H747-Disco DevBoard. Now at the address 0x90000000, the string "msgOut" should be shown.
+
+\lstset{language=C,caption={QSPI Write Test CM7},label=DescriptiveLabel, style=mystyle}
+\begin{codeblock}
+	\lstinputlisting{../../../6_Software/qspi flash/CM7/Core/Usercode/usermain_CM7.c}
+\end{codeblock}
+
+While playing a bit with this code, I've noticed, that the flash can't manipulate single bits. It can just turn a 1 into a 0 but nor in reverse. To set a 0 to a 1 you have to erase a whole sector or the whole chip. After some research on this topic I've learned, that this behaviour is common for flash memories, as they're normally only used to store data over a long time. For example: Firmware.
+
+
+\subsection{THEORIETEIL QSPI}
