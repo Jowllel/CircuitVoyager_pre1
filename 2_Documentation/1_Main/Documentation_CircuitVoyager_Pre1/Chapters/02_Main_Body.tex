@@ -344,4 +344,5 @@ Now you can download the firmware to the MCU. And verify, that no error is trigg
 While playing a bit with this code, I've noticed, that the flash can't manipulate single bits. It can just turn a 1 into a 0 but nor in reverse. To set a 0 to a 1 you have to erase a whole sector or the whole chip. After some research on this topic I've learned, that this behaviour is common for flash memories, as they're normally only used to store data over a long time. For example: Firmware.
 
 
-\subsection{THEORIETEIL QSPI}
+\subsection{Boot from QSPI}
+After trying to boot from the QSPI flash, I decided to change my plans an go on without a bootloader and external RAM. At the moment I don't know to less debug the problems I've had and therefore I decided to go on with the easier tasks of this project like the actual measurements and move the Memories implementation to another project.
