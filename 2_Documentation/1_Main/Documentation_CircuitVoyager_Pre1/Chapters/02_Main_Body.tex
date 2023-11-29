@@ -245,10 +245,129 @@ Then I've assembled the PCB by hand, which wasn't a problem at all. But it turne
 	\caption{Extension PCB}
 	\label{fig:Extension PCB}
 \end{figure}
-PCB Bild durch echtes bild ersetzen.
 
 \newpage
 \subsubsection{Commissioning}
+I've only documented one commission of the 2 PCBs. The other one was tested with the same process.
+
+\begin{table}[H]
+	\centering
+	\label{tab:commissioning PCB 1}
+\begin{tabular}{|| c | c | c | c ||} 
+\hline
+Action & Measurement point & Expected & Measured \\ [0.5ex] 
+\hline\hline
+Connect power supply @ 5V & CN1.6 \(\rightarrow\) TP7 & max. 100mA & \textcolor{Green}{\textbf{18mA}} \\
+\hline
+Test Buzzer (TP9 to 3.3V) & acoustic & beeps & \textcolor{Green}{\textbf{PASS}} \\
+\hline
+Test const. Current & J3.1 & 1mA & \textcolor{Red}{\textbf{13mA}} \\
+\hline
+LEDs on with AWG (CN1.2) & optical & lights up & \textcolor{Green}{\textbf{PASS}} \\
+\hline
+Current meas. test Range 1 & CN1.14 & 10V/A & \textcolor{Green}{\textbf{fig: \ref{fig:Commissioning PCB1 current measurements}}} \\
+\hline
+Current meas. test Range 2 & CN1.14 & 2.5V/A & \textcolor{Green}{\textbf{fig: \ref{fig:Commissioning PCB1 current measurements}}} \\
+\hline
+Voltage meas. test Range 1 & CN1.13 & 0.68V/V & \textcolor{Green}{\textbf{fig: \ref{fig:Commissioning PCB1 voltage measurements}}} \\
+\hline
+Voltage meas. test Range 2 & CN1.13 & 0.32V/V & \textcolor{Green}{\textbf{fig: \ref{fig:Commissioning PCB1 voltage measurements}}} \\
+\hline
+\end{tabular}
+	\caption{commissioning PCB 1}
+\end{table}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{Resources/comissioning_lab_build.JPEG}
+	\caption{Commissioning Lab}
+	\label{fig:Commissioning Lab}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{groupplot}[
+		group style={
+			group size=1 by 2,
+			horizontal sep=0cm,
+			ylabels at=edge left,
+		},
+		width=13cm,
+		height=3.5cm,
+		scale only axis,
+		xmin=0,xmax=1600,
+		xtick distance=200,
+		enlargelimits=false,
+		grid=major,
+		]
+		
+		\nextgroupplot[ylabel=$ U_{TP12(R1)} $, y unit=mV, xticklabels={}, ymin=0, ymax=3500, ytick distance=500]
+		\addplot[red] coordinates { (1, 23) (5, 64) (10, 116) (50, 533) (100, 1050) (200, 2070) (400, 3320) (600, 3460) (800, 3480)};
+
+		\nextgroupplot[ylabel=$ U_{TP12(R2)} $, y unit=mV, xlabel=$ I $,x unit=mA, ymin=0, ymax=3500, ytick distance=500]
+		\addplot[ForestGreen] coordinates { (1, 7) (100, 273) (200, 544) (400, 1080) (600, 1620) (800, 2140) (1000, 2600) (1200, 2970) (1400, 3240) (1600, 3460)};
+		
+		\end{groupplot}
+	\end{tikzpicture}
+\caption{Commissioning PCB1 current measurements}
+\label{fig:Commissioning PCB1 current measurements}
+\end{figure}
+
+
+
+
+
+
+
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{groupplot}[
+		group style={
+			group size=1 by 2,
+			horizontal sep=0cm,
+			ylabels at=edge left,
+		},
+		width=13cm,
+		height=3.5cm,
+		scale only axis,
+		xmin=0,xmax=16,
+		xtick distance=2,
+		enlargelimits=false,
+		grid=major,
+		]
+		
+		\nextgroupplot[ylabel=$ U_{TP11(R1)} $, y unit=mV, xticklabels={}, ymin=0, ymax=3500, ytick distance=500]
+		\addplot[red] coordinates { (0, 0) (1, 680) (2, 1360) (3, 2020) (4, 2570) (5, 2970) (6, 3230) (7, 3400) (8, 3400)  (9, 3400)};
+
+		\nextgroupplot[ylabel=$ U_{TP11(R2)} $, y unit=mV, xlabel=$ U $,x unit=V, ymin=0, ymax=3500, ytick distance=500]
+		\addplot[ForestGreen] coordinates { (0, 0) (1, 320) (2, 640) (3, 950) (4, 1270) (5, 1590) (6, 1890) (7, 2180) (8, 2450) (9, 2670) (10, 2860) (11, 3010) (12, 3140) (13, 3250) (14, 3340) (15, 3400) (16, 3400) };
+		
+		\end{groupplot}
+	\end{tikzpicture}
+\caption{Commissioning PCB1 voltage measurements}
+\label{fig:Commissioning PCB1 voltage measurements}
+\end{figure}
+
+
+FUCKING RAIL TO RAIL OP NEH...
+
+CURRENT SOURCE MUCH ABKOPPELBAR SI...
+
+test über abflachung in grafix wegen zdiode.
+
+text zu Current source falscher strom. kaputt?
+
+
+
+
+
 
 
 \newpage
