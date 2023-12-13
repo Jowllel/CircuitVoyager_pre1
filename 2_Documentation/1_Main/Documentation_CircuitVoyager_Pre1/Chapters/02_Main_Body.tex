@@ -356,13 +356,20 @@ Voltage meas. test Range 2 & CN1.13 & 0.32V/V & \textcolor{Green}{\textbf{fig: \
 \end{figure}
 
 
-FUCKING RAIL TO RAIL OP NEH...
+%\textit{FUCKING RAIL TO RAIL OP NEH...}
 
-CURRENT SOURCE MUCH ABKOPPELBAR SI...
+%\textit{text über abflachung in grafix wegen zdiode.}
 
-test über abflachung in grafix wegen zdiode.
+\newpage
 
-text zu Current source falscher strom. kaputt?
+\subsubsection{Bad Design}
+During the commissioning I noticed, that some of my circuit are kind of misconstructions. This is due to my missing design review but gives me the opportunity to reflect a lot and learn about my fault the hard way.
+
+So first my Current Source has the problem, that is directly connected to the V terminal which is done correct, only considering the resistance mode of the DMM. But when trying to measure a voltage, the current source will inject a current into the voltage measuring circuit which makes the voltage measuring circuit / mode unusable. So the current source should be able to be turned off, to use the voltage mode of the DMM. Because I don't have enough time to fix this problem, I will cut through J1.
+
+The current source also doesn't work as intended, as the const. current which should be 1mA is now around 13mA. But I don't bother, cause I won't use the current source anyways.
+
+See also: Figure \ref{fig:Extension PCB Schematics}
 
 
 
