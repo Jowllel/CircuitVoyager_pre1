@@ -472,3 +472,8 @@ While playing a bit with this code, I've noticed, that the flash can't manipulat
 
 \subsection{Boot from QSPI}
 After trying to boot from the QSPI flash, I decided to change my plans an go on without a bootloader and external RAM. At the moment I don't know to less debug the problems I've had and therefore I decided to go on with the easier tasks of this project like the actual measurements and move the Memories implementation to another project.
+
+
+
+\section{User Interface}
+I first tried to use TouchGFX to design an embedded UI using STMs TouchGFX which is a code generator for graphical displays with STM32 microcontrollers. But it turned out, that it's a lot more complicated that I originally thought. This is due to the usage of FreeRTOS and C++, which I both didn't know by then. So also because of the limited time I decided to make a tkinter app in python to show the measured values. The app is in the software folder and has the name "CircuitVoyager UI". As a base I used the following GitHUB repo: \cite{Python_Serial_Port_Tkinter_GUI}
