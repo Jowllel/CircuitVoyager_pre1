@@ -3,6 +3,7 @@
 
 #include "main.h"
 #include "usart.h"
+#include "adc.h"
 
 #include <string.h>
 #include <stdio.h>
