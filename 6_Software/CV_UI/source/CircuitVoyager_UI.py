@@ -378,7 +378,7 @@ class SerialPortManager:
                     port=self.serialPortName,
                     baudrate=self.serialPortBaud,
                     bytesize=8,
-                    timeout=0,
+                    timeout=0.1,
                     stopbits=serial.STOPBITS_ONE,
                 )
             else:
