@@ -34,4 +34,11 @@ HAL_StatusTypeDef CV_ARange_Set(CV_ARange_TypeDef range)
 	}
 }
 
+void CV_Buz_BeepBlocking(uint32_t millis)
+{
+    HAL_GPIO_WritePin(BUZ_GPIO_Port, BUZ_Pin, 1);
+    HAL_Delay(millis);
+    HAL_GPIO_WritePin(BUZ_GPIO_Port, BUZ_Pin, 0);
+}
+
 

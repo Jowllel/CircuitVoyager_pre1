@@ -8,9 +8,7 @@ void usermain_cm7(void)
     HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, !1);
 
     //Beep for 250ms at startup
-    HAL_GPIO_WritePin(BUZ_GPIO_Port, BUZ_Pin, 1);
-    HAL_Delay(250);
-    HAL_GPIO_WritePin(BUZ_GPIO_Port, BUZ_Pin, 0);
+    CV_Buz_BeepBlocking(250);
 
     //Start in voltage range 1 (O.L. at 4.9V)
     CV_VRange_Set(CV_VRange_1__4_9V);

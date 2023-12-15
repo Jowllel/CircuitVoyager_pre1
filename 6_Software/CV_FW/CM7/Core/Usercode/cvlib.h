@@ -22,6 +22,8 @@ typedef enum
 HAL_StatusTypeDef CV_VRange_Set(CV_VRange_TypeDef range);
 HAL_StatusTypeDef CV_ARange_Set(CV_ARange_TypeDef range);
 
+void CV_Buz_BeepBlocking(uint32_t millis);
+
 
 
 #endif /* USERCODE_CVLIB_H_ */
