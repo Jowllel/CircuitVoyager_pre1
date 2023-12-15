@@ -25,6 +25,8 @@ class GUI:
         self.currentText = None
         self.powerText = None
         self.timerText = None
+        self.VRangeText = None
+        self.ARangeText = None
         self.stringOld = None
         self.stringNew = None
         self.portNamesList = []
@@ -177,6 +179,24 @@ class GUI:
             fg="#444444"
         )
 
+        self.VRangeText = tk.StringVar(value="Range: -")
+        self.VRangeLabel = tk.Label(
+            self.topFrame,
+            textvariable=self.VRangeText,
+            font=("Consolas", "10"),
+            bg="#cccccc",
+            fg="#444444"
+        )
+
+        self.ARangeText = tk.StringVar(value="Range: -")
+        self.ARangeLabel = tk.Label(
+            self.topFrame,
+            textvariable=self.ARangeText,
+            font=("Consolas", "10"),
+            bg="#cccccc",
+            fg="#444444"
+        )
+
         # Start updating textbox in GUI
         self.recursive_update_textbox()
 
@@ -186,7 +206,7 @@ class GUI:
 
         padding = 10
         window_width = 770
-        window_height = 280
+        window_height = 290
 
         # Size of application window
         self.window.geometry("{}x{}".format(window_width, window_height))
@@ -214,6 +234,9 @@ class GUI:
         self.powerLabel.grid(column=2, row=3)
 
         self.timerLabel.grid(column=2, row=1)
+
+        self.VRangeLabel.grid(column=0, row=4)
+        self.ARangeLabel.grid(column=1, row=4)
 
         self.window.protocol("WM_DELETE_WINDOW", self.close_window)
         # Blocking loop for GUI (Always put at the end)
@@ -255,6 +278,8 @@ class GUI:
             self.voltageText.set("-")
             self.currentText.set("-")
             self.powerText.set("-")
+            self.VRangeText.set("Range: -")
+            self.ARangeText.set("Range: -")
 
             self.serialPortManager.stop()
 
@@ -318,7 +343,7 @@ class GUI:
         self.textBox.insert(tk.INSERT, serialPortBuffer.decode("ascii"))
 
         if self.timerText.get() != "Timeout: -":
-         self.timerText.set(f"Timeout: {int(time.time() - self.t)}s")
+            self.timerText.set(f"Timeout: {int(time.time() - self.t)}s")
 
         self.stringOld = self.stringNew
         self.stringNew = serialPortBuffer.decode("ascii")
@@ -329,8 +354,19 @@ class GUI:
                 self.voltageText.set(splitString[0])
                 self.currentText.set(splitString[1])
                 self.powerText.set(splitString[2])
+                self.VRangeText.set(splitString[3])
+                self.ARangeText.set(splitString[4])
                 self.t = time.time()
                 self.timerText.set(f"Timeout: {int(time.time() - self.t)}s")
+
+                if self.VRangeText.get() == "VR:1":
+                    self.VRangeText.set("Range: 4.9V")
+                if self.VRangeText.get() == "VR:2":
+                    self.VRangeText.set("Range: 10.35V")
+                if self.ARangeText.get() == "AR:1":
+                    self.ARangeText.set("Range: 330mA")
+                if self.ARangeText.get() == "AR:2":
+                    self.ARangeText.set("Range: 1.32A")
 
         # autoscroll to the bottom
         self.textBox.see(tk.END)
@@ -378,7 +414,7 @@ class SerialPortManager:
                     port=self.serialPortName,
                     baudrate=self.serialPortBaud,
                     bytesize=8,
-                    timeout=0.1,
+                    timeout=99999,
                     stopbits=serial.STOPBITS_ONE,
                 )
             else:
