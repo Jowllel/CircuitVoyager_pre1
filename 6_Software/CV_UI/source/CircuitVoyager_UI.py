@@ -324,7 +324,7 @@ class GUI:
         self.stringNew = serialPortBuffer.decode("ascii")
 
         if not self.stringOld == self.stringNew:
-            if len(self.stringNew) == 17:
+            if len(self.stringNew) == 27:
                 splitString = self.stringNew.split("\t")
                 self.voltageText.set(splitString[0])
                 self.currentText.set(splitString[1])
