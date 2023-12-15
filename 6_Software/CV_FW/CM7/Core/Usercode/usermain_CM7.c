@@ -13,11 +13,10 @@ void usermain_cm7(void)
     HAL_GPIO_WritePin(BUZ_GPIO_Port, BUZ_Pin, 0);
 
     //Start in voltage range 1 (O.L. at 4.9V)
-    HAL_GPIO_WritePin(V_R1_EN_GPIO_Port, V_R1_EN_Pin, 1);
-    HAL_GPIO_WritePin(V_R2_EN_GPIO_Port, V_R2_EN_Pin, 0);
+    CV_VRange_Set(CV_VRange_1__4_9V);
 
     //Start in current range 1 (O.L. at 330mA)
-    HAL_GPIO_WritePin(A_RSEL_GPIO_Port, A_RSEL_Pin, 0);
+    CV_ARange_Set(CV_ARange_1__0_330A);
 
 
 
@@ -42,7 +41,7 @@ void usermain_cm7(void)
         current = HAL_ADC_GetValue(&hadc3) * 3.3 / 10 / 65536;
 
         //format output buffer with voltage, current and power reading.
-        sprintf((char *)uartBuf, "%03.1fV\t%04.2fA\t%05.2fW", voltage, current, voltage*current);
+        sprintf((char *)uartBuf, "%03.1fV\t%04.2fA\t%05.2fW", voltage, current, voltage * current);
 
         //Output buffer over UART 1. (ST-Link UART)
         HAL_UART_Transmit(&huart1, uartBuf, strlen((char *)uartBuf), HAL_MAX_DELAY);
