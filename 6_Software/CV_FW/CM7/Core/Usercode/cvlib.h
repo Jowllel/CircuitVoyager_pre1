@@ -26,6 +26,9 @@ const double CV_ARange_Factor[3]; //index: CV_ARange_Enum
 #define CV_AThreshold_R12 0.24
 #define CV_AThreshold_R21 0.26
 
+#define CV_V_OL 8
+#define CV_A_OL 1
+
 
 HAL_StatusTypeDef CV_VRange_Set(CV_VRange_Enum range);
 HAL_StatusTypeDef CV_ARange_Set(CV_ARange_Enum range);

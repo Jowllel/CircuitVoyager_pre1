@@ -5,6 +5,10 @@ void usermain_cm7(void)
     //init local variables
     uint8_t uartBuf[50] = "";
 
+    uint8_t VMsg[7] = "";
+    uint8_t AMsg[7] = "";
+    uint8_t WMsg[8] = "";
+
     double voltage = (double)0;
     double current = (double)0;
 
@@ -63,7 +67,16 @@ void usermain_cm7(void)
 
 
         //format output buffer with voltage, current and power reading.
-        sprintf((char *)uartBuf, "%03.1fV\t%04.2fA\t%05.2fW\tVR:%d\tAR:%d", voltage, current, voltage * current, VRange, ARange);
+        if(voltage < CV_V_OL) sprintf((char *)VMsg, "%04.2fV\t", voltage);
+        else                  sprintf((char *)VMsg, "O.L.\t");
+
+        if(current < CV_A_OL) sprintf((char *)AMsg, "%04.2fA\t", current);
+        else                  sprintf((char *)AMsg, " O.L.\t");
+
+        if((voltage < CV_V_OL) && (current < CV_A_OL)) sprintf((char *)WMsg, "%04.2fW\t", voltage * current);
+        else                                           sprintf((char *)WMsg, " O.L. \t");
+
+        sprintf((char *)uartBuf, "%s%s%sVR:%d\tAR:%d", VMsg, AMsg, WMsg, VRange, ARange);
 
         //Output buffer over UART 1. (ST-Link UART)
         HAL_UART_Transmit(&huart1, uartBuf, strlen((char *)uartBuf), HAL_MAX_DELAY);
