@@ -30,6 +30,7 @@ class GUI:
         self.stringOld = None
         self.stringNew = None
         self.portNamesList = []
+        self.timeoutNum = 0
 
         self.isAnyPortAvailable = False
         self.isStarted = False
@@ -245,6 +246,9 @@ class GUI:
 
         self.window.mainloop()
 
+    def getTimeoutNumber(self):
+        return self.timeoutNum
+
     def start_button_command(self):
 
         if self.isStarted == False:
@@ -343,13 +347,16 @@ class GUI:
         self.textBox.insert(tk.INSERT, serialPortBuffer.decode("ascii"))
 
         if self.timerText.get() != "Timeout: -":
-            self.timerText.set(f"Timeout: {int(time.time() - self.t)}s")
+            self.timeoutNum = int(time.time() - self.t)
+            self.timerText.set(f"Timeout: {self.timeoutNum}s")
 
         self.stringOld = self.stringNew
         self.stringNew = serialPortBuffer.decode("ascii")
 
+        print(self.stringNew, end="")
+
         if not self.stringOld == self.stringNew:
-            if len(self.stringNew) == 27:
+            if len(self.stringNew) == 28:
                 splitString = self.stringNew.split("\t")
                 self.voltageText.set(splitString[0])
                 self.currentText.set(splitString[1])
@@ -357,15 +364,15 @@ class GUI:
                 self.VRangeText.set(splitString[3])
                 self.ARangeText.set(splitString[4])
                 self.t = time.time()
-                self.timerText.set(f"Timeout: {int(time.time() - self.t)}s")
+                self.timerText.set(f"Timeout: {self.timeoutNum}s")
 
                 if self.VRangeText.get() == "VR:1":
                     self.VRangeText.set("Range: 4.9V")
                 if self.VRangeText.get() == "VR:2":
                     self.VRangeText.set("Range: 10.35V")
-                if self.ARangeText.get() == "AR:1":
+                if self.ARangeText.get() == "AR:1\n":
                     self.ARangeText.set("Range: 330mA")
-                if self.ARangeText.get() == "AR:2":
+                if self.ARangeText.get() == "AR:2\n":
                     self.ARangeText.set("Range: 1.32A")
 
         # autoscroll to the bottom
@@ -418,6 +425,7 @@ class SerialPortManager:
                     stopbits=serial.STOPBITS_ONE,
                 )
             else:
+                self.serialPort.write(b"1")
                 # Wait until there is data waiting in the serial buffer
                 while self.serialPort.in_waiting > 0:
                     # Read only one byte from serial port
@@ -446,8 +454,6 @@ class SerialPortManager:
             character = inputByte.decode("ascii")
         except UnicodeDecodeError:
             pass
-        else:
-            print(character, end="")
 
 
 if __name__ == "__main__":
