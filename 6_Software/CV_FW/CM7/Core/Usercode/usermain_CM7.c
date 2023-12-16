@@ -111,7 +111,7 @@ void usermain_cm7(void)
         else                  sprintf((char *)VMsg, "O.L.\t");
 
         if(current < CV_A_OL) sprintf((char *)AMsg, "%04.2fA\t", current);
-        else                  sprintf((char *)AMsg, " O.L.\t");
+        else                  sprintf((char *)AMsg, "O.L.\t");
 
         if((voltage < CV_V_OL) && (current < CV_A_OL))
         {
