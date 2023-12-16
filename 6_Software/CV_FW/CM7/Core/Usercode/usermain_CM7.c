@@ -42,7 +42,7 @@ void usermain_cm7(void)
     while(1)
     {
         if((HAL_UART_Receive(&huart1, uartInBuf, 1, 100) == HAL_OK) && (uartInBuf[0] == '1')) noMsgCnt = 0;
-        else                                                       noMsgCnt++;
+        else if(noMsgCnt < 10)                                                                noMsgCnt++;
 
         if(noMsgCnt >= 2)
         {
