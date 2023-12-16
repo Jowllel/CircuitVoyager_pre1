@@ -63,3 +63,33 @@ double CV_AMeas_RawBlocking()
 }
 
 
+void CV_LED_SendByte(uint8_t byte)
+{
+    if (byte & 0b10000000) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b01000000) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b00100000) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b00010000) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b00001000) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b00000100) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b00000010) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+    if (byte & 0b00000001) { CV_LED_SEND_1; } else { CV_LED_SEND_0; }
+}
+
+
+void CV_LED_SendRGB(uint32_t color)
+{
+    CV_LED_SendByte((color >> 8) & 0xFF);
+    CV_LED_SendByte((color >> 16) & 0xFF);
+    CV_LED_SendByte((color >> 0) & 0xFF);
+}
+
+void CV_LED_SendBuf()
+{
+    for(int i = 0; i < 5; i++)
+    {
+        CV_LED_SendRGB(CV_LED_BUF[i]);
+    }
+    HAL_Delay(1);
+}
+
+
