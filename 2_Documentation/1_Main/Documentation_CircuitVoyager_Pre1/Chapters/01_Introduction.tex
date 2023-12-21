@@ -2,19 +2,19 @@
 \label{cha:Introduction}
 
 
-The goal of this project is to develop a tiny extension Board for the STM32H747i-Disco Board, to allow it to act as a \acs{dmm}. Additionally, a \acs{sw}, that measures the \acs{dmm} Values and displays them on the Touch Display. If there's more time I could extend the Project with Measurement Logging via a SD-Card or over USB to a Desktop application.
+The goal of this project is to develop a tiny extension Board for the STM32H747i-Disco Board, to allow it to act as a \acs{dmm}. Additionally, a \acs{sw}, that measures the \acs{dmm} Values and displays them on the touch display. If there's more time I could extend the project with measurement-logging via a SD-Card or over USB to a desktop application.
 \\
 I want to learn how to implement high speed protocols such as \acs{mipidsi} or \acs{qspi}. Later in the last year of my apprenticeship I'd like to develop a whole \acs{dmm} on my own, but with a different approach as standard ones like these from Fluke. For example, I want to make the \acs{dmm} rechargeable and modernize it a bit. 
 \\
-To realize this project I'm going to use the following tools: Altium Designer, STM32-CubeIDE, LaTeX, TouchGFX.
+To make this project I'm going to use the following tools: Altium Designer, STM32-CubeIDE, LaTeX, TouchGFX, DrawIO.
 \\
-Also I won't make a diary, because it's easier for me to write my findings down sorted by theme rather than date. But to keep the chronological order of the stuff I've done, there's a Journal in Chapter: [\ref{sec:Journal}].
+Also I won't make a diary, because it's easier for me to write my findings down sorted by theme rather than date. But to keep the chronological order of the stuff I've done, there's a journal in chapter: [\ref{sec:Journal}].
 
 \section{''Lastenheft''}
 \label{sec:Lastenheft}
 This is a request from the imaginary customer, I'm making this project for:
 \\
-I need a prototype for a \acs{dmm}, that can measure voltage, current and continuity. The \acs{dmm} should have a touchscreen that displays said values. The UI should be intuitive, so everyone who's ever used a DMM can use it to. Normal features as hold, minmax should be available and it would be great if you could fit in a power mode, where the DMM uses the voltage and current measurement to calculate the drawn power from the measured device. Because this project will only be used for the proof of concept, the DMM doesn't have to support mains voltage and we also won't need any safety circuits, AC measuring or negative voltages / currents. It's mainly about the SW. So you can also use DevBoards if there are any available. 
+I need a prototype for a \acs{dmm}, that can measure voltage, current and continuity. The \acs{dmm} should have a touchscreen that displays said values. The UI should be intuitive, so anybody who's ever used a DMM can use it to. And it would be great if you could fit in a power mode, where the DMM uses the voltage and current measurement to calculate the drawn power from the measured device. Because this project will only be used for the proof of concept, the DMM doesn't have to support mains voltage, and we also won't need any safety circuits, AC measuring or negative voltages / currents. It's mainly about the SW. So you can also use DevBoards if there are any available. 
 
 \newpage
 
@@ -34,8 +34,8 @@ I need a prototype for a \acs{dmm}, that can measure voltage, current and contin
                 node {Software}
                 child { node {extern. Memory}}
                 child { node {HAL}}
-                child { node {UI Modes}}
-                child { node {Cali-bration}}
+                child { node {CV Lib}}
+                child { node {Python UI}}
             }
             child [concept color=green!30] { 
                 node {Hardware}
