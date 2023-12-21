@@ -130,15 +130,15 @@
     \item Create project diagram (learning process)
     \item ''Lastenheft''
     \item ''Pflichtenheft''
-    \item Make a \acs{hw}-Digram for the Extension \acs{pcb}.
-    \item Make the schematic of the Extension \acs{pcb}. 
+    \item Make a \acs{hw}-Digram for the Extension PCB.
+    \item Make the schematic of the Extension PCB. 
     \begin{itemize}
         \item Part to measure voltage.
         \item Part to measure current.
         \item Part to measure continuity.
         \item Addressable LEDs.
     \end{itemize}
-    \item Start with the Layout of the Extension \acs{pcb}.
+    \item Start with the Layout of the Extension PCB.
     \item Reflection of the start of the project.
 \end{itemize}
 
@@ -153,15 +153,15 @@ Fall holidays. I planned to invest much time in the holidays, but it turned out 
 \subsection{KW43 \& 44}
 Mainly catching up.
 \begin{itemize}
-    \item Make a \acs{hw}-Digram for the Extension \acs{pcb}.
-    \item Make the schematic of the Extension \acs{pcb}. 
+    \item Make a \acs{hw}-Digram for the Extension PCB.
+    \item Make the schematic of the Extension PCB. 
     \begin{itemize}
         \item Part to measure voltage.
         \item Part to measure current.
         \item Part to measure continuity.
         \item Addressable LEDs.
     \end{itemize}
-    \item Make the whole Layout of the Extension \acs{pcb}.
+    \item Make the whole Layout of the Extension PCB.
     \item Order the Extension PCB and the components.
     \item Reflection of the start of the project.
 \end{itemize}
@@ -180,9 +180,23 @@ and maybe if the time is sufficient I could start with learning TouchGFX.
 
 
 \subsection{KW47 \& 48}
-\subsection{KW49 \& 50}
-\subsection{KW51}
+\begin{itemize}
+  \item Boot from QSPI flash.
+  \item Commissioning of Extension PCB.
+\end{itemize}
 
+\subsection{KW49 \& 50}
+\begin{itemize}
+  \item Make Firmware for MCU.
+  \item Make UI with python for PC, which shows voltage, current and power.
+\end{itemize}
+
+\subsection{KW51}
+\begin{itemize}
+  \item Complete documentation.
+  \item Fill out review.
+  \item Start with PowerPoint. Finalize in Christmas holidays.
+\end{itemize}
 
 \newpage
 
@@ -295,3 +309,31 @@ and maybe if the time is sufficient I could start with learning TouchGFX.
 	\label{fig:Extension PCB Manufacture 11.23 BOM}
 \end{figure}
 \newpage
+
+
+
+\lstset{language=C,caption={CV FW 1},label=DescriptiveLabel, style=mystyle}
+\begin{codeblock}
+	\lstinputlisting[firstline=1, lastline=38]{../../../6_Software/CV_FW/CM7/Core/Usercode/usermain_CM7.c}
+\end{codeblock}
+
+\newpage
+
+\lstset{language=C,caption={CV FW 2},label=DescriptiveLabel, style=mystyle}
+\begin{codeblock}
+	\lstinputlisting[firstline=41, lastline=77]{../../../6_Software/CV_FW/CM7/Core/Usercode/usermain_CM7.c}
+\end{codeblock}
+
+\newpage
+
+\lstset{language=C,caption={CV FW 3},label=DescriptiveLabel, style=mystyle}
+\begin{codeblock}
+	\lstinputlisting[firstline=78, lastline=108]{../../../6_Software/CV_FW/CM7/Core/Usercode/usermain_CM7.c}
+\end{codeblock}
+
+\newpage
+
+\lstset{language=C,caption={CV FW 4},label=DescriptiveLabel, style=mystyle}
+\begin{codeblock}
+	\lstinputlisting[firstline=109]{../../../6_Software/CV_FW/CM7/Core/Usercode/usermain_CM7.c}
+\end{codeblock}

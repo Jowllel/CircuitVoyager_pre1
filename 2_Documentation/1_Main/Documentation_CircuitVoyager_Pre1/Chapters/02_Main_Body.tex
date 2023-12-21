@@ -361,11 +361,9 @@ See also: Figure [\ref{fig:Extension PCB Schematics}]
 
 \subsection{Range Switching}
 \label{subsec:rangeswitching}
-[Write more detailed text about how to execute range switching and what are the pros and cons. Minimum 3 options]
-
-
-Text to put into ranges part:
-This range switching part has the advantage of using many ranges at once, as for example with 2 range switches can use 3 different ranges and with 3 range switches can use 7 ranges. On the other hand it has the disadvantage of only being able to divide the input voltage and not being able to amplify. Additionally, the internal resistance is always changing and therefore impacting the DUT. I wouldn't recommend this circuit because of said factors and only switch on the measured side. For example use different Amps / Divs to create the right voltage ranges and only switch the high Z path, that doesn't have an impact on the DUT.
+First the option to switch resistors in the measuring path, by using some kind of transistor. As currently used in the voltage measuring circuit. This range switching part has the advantage of using many ranges at once, as for example with 2 range switches can use 3 different ranges and with 3 range switches can use 7 ranges. On the other hand it has the disadvantage of only being able to divide the input voltage and not being able to amplify. Additionally, the internal resistance is always changing and therefore impacting the DUT. I wouldn't recommend this circuit because of said factors and only switch on the measured side. For example use different Amps / Divs to create the right voltage ranges and only switch the high Z path, that doesn't have an impact on the DUT.
+\\
+The other option I've tested is to change the amplification factor. Like I've done in the current measuring circuit. This approach has the advantage that the DUT isn't affected by the range switching, because the shunt resistor is always the same and current can flow, even if the DMM is turned off. Additionally, this type of range switching can both, amplify and dampen the input signal. This can be approached by using multiple amplifying circuits and then select from them with a multiplexer, or by changing the amplification factor of one amplifier with a digitally controlled potentiometer.
 
 
 
